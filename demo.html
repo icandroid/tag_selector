@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo of tag selector</title>
+    <script type="application/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.4.min.js"></script>
+    <script type="application/javascript" src="tag_selector.js"></script>
+    <style type="text/css">
+        .t1_tag, .t2_tag {
+            display: inline-block;
+            width: 50px;
+            background: cadetblue;
+            margin: 2px;
+        }
+        .t1_tag_selected, .t2_tag_selected{
+            background: aqua;
+        }
+    </style>
+</head>
+<body>
+    <h1>Demonstration of tag selector</h1>
+    <h2>single select</h2>
+    <div id="tag_single_select"></div>
+    <h2>multi select</h2>
+    <div id="tag_multi_select"></div>
+    <h2></h2>
+    <button onclick="check_value();">show info</button>
+    <div id="info">
+
+    </div>
+    <script type="application/javascript">
+        $().ready(function(){
+           $('#tag_single_select').tag_selector({
+               class_prefix: 't1'
+               , data: [
+                   {label: 't1', value: 1}
+                   , {label: 't2', value: 2, selected: true}
+                   , {label: 't3', value: 3}
+                   ]
+               , callback: function(event_name, elem, parent){
+                   check_value();
+               }
+           });
+           $('#tag_multi_select').tag_selector({
+               class_prefix: 't2'
+               , multi_select: true
+               , data: [
+                   {label: 't1', value: 1}
+                   , {label: 't2', value: 2, selected:true}
+                   , {label: 't3', value: 3, selected: true}
+               ]
+               , callback: function(event_name, elem, parent){
+                   check_value();
+               }
+            });
+        });
+        function check_value() {
+            var info = $('#info');
+            var text = '';
+            text += '<p>single: selected: <br>';
+            text += $('#tag_single_select').data('selected') + '</p>';
+            text += '<p>single: unselected: <br>';
+            text += $('#tag_single_select').data('unselected') + '</p>';
+            text += '<p>multi: selected: <br>';
+            text += $('#tag_multi_select').data('selected') + '</p>';
+            text += '<p>multi: unselected: <br>';
+            text += $('#tag_multi_select').data('unselected') + '</p>';
+            info.html(text);
+        }
+    </script>
+</body>
+</html>
